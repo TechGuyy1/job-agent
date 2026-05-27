@@ -6,6 +6,8 @@ import com.job_agent.demo.service.JobScraperService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import com.job_agent.demo.service.JobScraperService;
+import com.job_agent.demo.dto.JobSearchRequest;
+import com.job_agent.demo.service.JobSearchService;
 
 @RestController
 @RequestMapping("/jobs")
@@ -13,10 +15,12 @@ public class JobController {
 
     private final JobRepository repository;
     private final JobScraperService scraperService;
+    private final JobSearchService jobSearchService;
 
-    public JobController(JobRepository repository, JobScraperService scraperService) {
+    public JobController(JobRepository repository, JobScraperService scraperService, JobSearchService jobSearchService) {
         this.repository = repository;
         this.scraperService = scraperService;
+        this.jobSearchService = jobSearchService;
     }
 
 //    @PostMapping("/sample")
@@ -37,8 +41,12 @@ public class JobController {
     public java.util.List<Job> getAllJobs() {
         return repository.findAll();
     }
-    @GetMapping("/search")
-    public List<Job> searchJobs() {
-        return scraperService.searchAndSaveJobs();
+@PostMapping("/search")
+    public List<Job> searchJobs(
+            @RequestBody JobSearchRequest request) {
+
+        return jobSearchService.searchJobs(
+                request.getKeyword(),
+                request.getLocation());
     }
 }
