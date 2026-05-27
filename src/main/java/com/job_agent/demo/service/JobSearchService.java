@@ -29,6 +29,8 @@ public class JobSearchService {
         job1.setStatus("NEW");
         job1.setJobUrl(
                 "https://careers.infosys.com");
+        job1.setDescription(
+                "Java Selenium TestNG Maven Jenkins API Testing SQL Git Agile Banking Domain");
 
         Job job2 = new Job();
         job2.setTitle(keyword + " Automation Tester");
@@ -37,10 +39,10 @@ public class JobSearchService {
         job2.setStatus("NEW");
         job2.setJobUrl(
                 "https://www.tcs.com/careers");
-
+        job2.setDescription(
+                "Selenium Cucumber BDD Rest Assured Jenkins Docker Kubernetes SQL API Automation");
         jobs.add(repository.save(job1));
         jobs.add(repository.save(job2));
-
         return jobs;
     }
 }
