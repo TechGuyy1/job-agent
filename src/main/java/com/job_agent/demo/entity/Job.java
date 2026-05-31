@@ -22,6 +22,13 @@ public class Job {
 
     @Column(length = 5000)
     private String description;
+    private String appliedDate;
+
+    private String applicationStatus;
+
+    private boolean applied;
+
+    private String recruiterEmail;
 
     public Long getId() {
         return id;
@@ -77,5 +84,8 @@ public class Job {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    public  void getAppliedDate(){
+        this.appliedDate = appliedDate;
     }
 }

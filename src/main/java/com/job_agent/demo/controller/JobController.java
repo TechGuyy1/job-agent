@@ -23,8 +23,9 @@ public class JobController {
     private final SkillExtractorService skillExtractorService;
     private final JobMatcherService jobMatcherService;
     private final IndeedScraperService indeedScraperService;
+    private final PlaywrightNaukriService playwrightService;
 
-    public JobController(JobRepository repository, JobScraperService scraperService, JobSearchService jobSearchService, ResumeRepository resumeRepository, PdfParserService pdfParserService, SkillExtractorService skillExtractorService, JobMatcherService jobMatcherService,  IndeedScraperService indeedScraperService) {
+    public JobController(JobRepository repository, JobScraperService scraperService, JobSearchService jobSearchService, ResumeRepository resumeRepository, PdfParserService pdfParserService, SkillExtractorService skillExtractorService, JobMatcherService jobMatcherService, IndeedScraperService indeedScraperService, PlaywrightNaukriService playwrightService) {
         this.repository = repository;
         this.scraperService = scraperService;
         this.jobSearchService = jobSearchService;
@@ -33,7 +34,8 @@ public class JobController {
         this.skillExtractorService = skillExtractorService;
         this.jobMatcherService = jobMatcherService;
         this.indeedScraperService =  indeedScraperService;
-}
+        this.playwrightService = playwrightService;
+    }
 
 //    @PostMapping("/sample")
     @GetMapping ("/sample")
@@ -89,5 +91,26 @@ public class JobController {
         indeedScraperService.scrapeJobs();
 
         return "Scraping Completed";
+    }
+//    @GetMapping("/playwright")
+//    public String playwrightTest() {
+//
+//        playwrightService.openNaukri();
+//
+//        return "Playwright Opened";
+//    }
+    @GetMapping("/naukri/login")
+    public String naukriLogin() {
+
+//        playwrightService.loginAndSaveSession();
+
+        return "Session Saved";
+    }
+    @GetMapping("/naukri/search")
+    public String searchUsingSession() {
+
+        playwrightService.loginAndReuseProfile();
+
+        return "Logged in using saved session";
     }
 }
