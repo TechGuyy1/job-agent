@@ -22,8 +22,9 @@ public class JobController {
     private final PdfParserService pdfParserService;
     private final SkillExtractorService skillExtractorService;
     private final JobMatcherService jobMatcherService;
+    private final IndeedScraperService indeedScraperService;
 
-    public JobController(JobRepository repository, JobScraperService scraperService, JobSearchService jobSearchService, ResumeRepository resumeRepository, PdfParserService pdfParserService, SkillExtractorService skillExtractorService, JobMatcherService jobMatcherService) {
+    public JobController(JobRepository repository, JobScraperService scraperService, JobSearchService jobSearchService, ResumeRepository resumeRepository, PdfParserService pdfParserService, SkillExtractorService skillExtractorService, JobMatcherService jobMatcherService,  IndeedScraperService indeedScraperService) {
         this.repository = repository;
         this.scraperService = scraperService;
         this.jobSearchService = jobSearchService;
@@ -31,7 +32,8 @@ public class JobController {
         this.pdfParserService = pdfParserService;
         this.skillExtractorService = skillExtractorService;
         this.jobMatcherService = jobMatcherService;
-    }
+        this.indeedScraperService =  indeedScraperService;
+}
 
 //    @PostMapping("/sample")
     @GetMapping ("/sample")
@@ -80,5 +82,12 @@ public class JobController {
 
         return jobMatcherService
                 .matchJobs(skills, jobs);
+    }
+    @GetMapping("/scrape")
+    public String scrapeJobs() throws Exception {
+
+        indeedScraperService.scrapeJobs();
+
+        return "Scraping Completed";
     }
 }
