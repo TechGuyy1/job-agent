@@ -1,6 +1,7 @@
 package com.job_agent.demo.service;
 
 import com.microsoft.playwright.*;
+import com.microsoft.playwright.options.AriaRole;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Paths;
@@ -32,7 +33,7 @@ public class PlaywrightNaukriService {
             System.out.println(
                     "Login manually first time if required");
 
-            page.waitForTimeout(60000);
+            page.waitForTimeout(6000);
 
             page.navigate(
                     "https://www.naukri.com/selenium-jobs-in-pune"
@@ -44,6 +45,16 @@ public class PlaywrightNaukriService {
                     page.locator("a.title").allTextContents();
 
             for (String title : titles) {
+
+                System.out.println(title);
+            }
+            page.getByText("JobsRecommended jobsNVitesApplication statusSaved jobsCompaniesExplore").click();
+            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Jobs").setExact(true)).click();
+
+            List<String> recJobs =
+                    page.locator("p.title").allTextContents();
+
+            for (String title : recJobs) {
 
                 System.out.println(title);
             }
